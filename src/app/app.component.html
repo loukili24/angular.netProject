@@ -1,0 +1,47 @@
+<!-- app.component.html -->
+
+<div class="app-container">
+  <header class="app-header">
+    <h1 class="app-title">Expense Tracker</h1>
+    <div class="budget-info">
+      <h2>Monthly Budget</h2>
+      <div class="budget-details">
+        <input type="number" [(ngModel)]="budget" placeholder="Set your budget" class="budget-input" />
+        <div class="progress-bar-container">
+          <div class="progress-bar" [style.width]="budgetProgress + '%'"></div>
+        </div>
+        <p class="budget-alert" *ngIf="totalExpenses > budget">
+          Alert: You have exceeded your budget!
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="main-content">
+    <section class="expense-section">
+      <h3>Expenses</h3>
+      <form (ngSubmit)="addExpense()">
+        <div class="expense-form">
+          <input type="text" [(ngModel)]="expenseName" name="expenseName" placeholder="Expense Name" required class="input-field"/>
+          <input type="number" [(ngModel)]="expenseAmount" name="expenseAmount" placeholder="Amount" required class="input-field"/>
+          <select [(ngModel)]="selectedCategory" name="category" required class="input-field">
+            <option value="">Select Category</option>
+            <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+          </select>
+          <button type="submit" class="btn">Add Expense</button>
+        </div>
+      </form>
+
+      <ul class="expense-list">
+        <li *ngFor="let expense of expenses" class="expense-item">
+          <span>{{ expense.name }} - ${{ expense.amount }} ({{ expense.category }})</span>
+          <button (click)="deleteExpense(expense)" class="delete-btn">Delete</button>
+        </li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="app-footer">
+    <p>&copy; 2024 Expense Tracker. All rights reserved.</p>
+  </footer>
+</div>
